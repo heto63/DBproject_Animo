@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title><%= title %></title>
+        <meta charset='utf-8'>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+      <h1><%= title %></h1>
+      <style>
+      table {
+        width: 100%;
+        border: 1px solid #444444;
+        border-collapse: collapse;
+      }
+      th {
+        border: 1px solid #444444;
+        padding: 10px;
+        background-color: #bbdefb;
+      }
+      td {
+        border: 1px solid #444444;
+        padding: 10px;
+      }
+      #del_btn
+      {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      #del_btn
+      {
+        border: 1px solid skyblue;
+        background-color: rgba(0,0,0,0);
+        color: skyblue;
+        padding: 5px;
+      }
+      #del_btn:hover
+      {
+        color:white;
+        background-color: skyblue;
+      }
+</style>
+      <a href="/enrolment">수강신청으로 돌아가기</a>
+      <br>
+      <br>
+      <form action="/enrolment/basket" method="post">
+      삭제할 학정번호 입력 <input type="text" name="del_course_num" id="del_course_num">  <button type="submit" id="del_btn">삭제하기</button>
+      <br>
+      <br>
+        </form>
+        <form action"enrolment/basket" method="get">
+          <table class="table table-hover">
+              <tr>
+                  <th>학정번호</th>
+                  <th>과목명</th>
+                  <th>구분</th>
+                  <th>교수</th>
+                  <th>학점</th>
+                  <th>강의장소</th>
+                  <th>강의시간1</th>
+                  <th>강의시간2</th>
+                  <th>강의시간3</th>
+              </tr>
+<%
+              for(var i=0;i<Regrows.length;i++)
+              {
+                var oneItem=Regrows[i];
+%>
+                <tr align="center">
+                  <td><%=oneItem.학정번호%></td>
+                  <td><%=oneItem.과목명%></td>
+                  <td><%=oneItem.구분%></td>
+                  <td><%=oneItem.교수%></td>
+                  <td><%=oneItem.학점%></td>
+                  <td><%=oneItem.강의장소%></td>
+                  <td><%=oneItem.강의시간1%></td>
+                  <td><%=oneItem.강의시간2%></td>
+                  <td><%=oneItem.강의시간3%></td>
+                </tr>
+<%
+              }
+%>
+  </form>
+          </table>
+          <br>
+          <br>
+          <table>
+            <tr>
+            <th>총 학점</th>
+            <th>전공 학점</th>
+            <th>교양 학점</th>
+          </tr>
+          <%
+                    for(var j=0;j<now.length;j++)
+                    {
+                      var tot=now[j];
+                      var gtot=now1[j];
+                      var jtot=now2[j];
+          %>
+
+                      <tr align="center">
+                      <td><%=tot.총점%></td>
+                      <td><%=jtot.전총점%></td>
+                      <td><%=gtot.교총점%></td>
+                      <tr>
+          <%
+                    }
+          %>
+        </table>
+    </body>
+</html>
