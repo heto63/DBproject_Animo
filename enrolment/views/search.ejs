@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title><%= title %></title>
+        <meta charset='utf-8'>
+        <meta charset='utf-8'>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+      <h1><%= title %></h1>
+      <style>
+      table {
+        width: 100%;
+        border: 1px solid #444444;
+        border-collapse: collapse;
+      }
+      th {
+        border: 1px solid #444444;
+        padding: 10px;
+        background-color: #bbdefb;
+      }
+      td {
+        border: 1px solid #444444;
+        padding: 10px;
+      }
+      #s_btn
+      {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      #s_btn
+      {
+        border: 1px solid skyblue;
+        background-color: rgba(0,0,0,0);
+        color: skyblue;
+        padding: 5px;
+      }
+      #s_btn:hover
+      {
+        color:white;
+        background-color: skyblue;
+      }
+</style>
+      <a href="/enrolment/basket">수강신청 현황 확인하기</a>
+      <br>
+      <a href="/enrolment">수강신청으로 돌아가기</a>
+      <br>
+      <br>
+      <form action="/enrolment/search" method="post" >
+       과목명 입력 <input type="text" name="s_course_name" id="s_course_name">  <button type="submit" id="s_btn">검색</button>
+        </form>
+    </body>
+</html>
