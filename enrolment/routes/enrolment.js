@@ -61,21 +61,19 @@ router.post('/',function(req,res,next){
   pool.getConnection(function(err,connection)
   {
 
+//중복
   connection.query(overlap,over_data,function(err,overrow){
     console.log("overrow: "+JSON.stringify(overrow));
 
     if(overrow.length==0){
-///////////////////////////////////////////////////////////
+/////////////////////강의시간겹침//////////////////////////////////////
     connection.query(timeoverlap,time_datas,function(err,timerow){
         console.log("timerow: "+JSON.stringify(timerow));
         if(timerow.length==0){
-//////////////////////////////////////////////////////
-  //          connection.query(makecredit,function(err,make){
-  //              console.log("numrow:"+JSON.stringify(make));
+/////////////////////학점초과/////////////////////////////////
                 connection.query(numover,over_data,function(err,numrow){
                 if(numrow.length==0){
                   res.send("<script>alert('<수강신청 불가> 학점이 초과되었습니다.');window.history.back();</script>");
-      /////////////////////////////////////////////////////////
                 }
                 else {
                   connection.query(sqlForInsertBoard,add_datas,function(err,rows){
@@ -87,7 +85,6 @@ router.post('/',function(req,res,next){
               }
 
             });
-       //});
 ////////////////////////////////////////////////////////////
        }
         else
@@ -178,5 +175,38 @@ router.post('/basket',function(req,res,next){
         });
     });
 });
+
+//강의 검색
+router.get('/search',function(req,res,next){
+
+    res.render('search',{title:'강의 검색'});
+
+});
+
+
+//강의 검색
+router.post('/search',function(req,res,next){
+
+  var s_course_name=req.body.s_course_name;
+  var s=[s_course_name];
+
+  pool.getConnection(function(err,connection){
+    var sqlSearch="select c.학정번호,c.과목명,c.구분,c.교수,c.학점,c.강의장소,t.강의시간1,t.강의시간2,t.강의시간3 from course_info as c natural join course_time as t where c.학정번호=t.학정번호 and c.과목명 like"+connection.escape('%'+req.body.s_course_name+'%');
+
+    connection.query(sqlSearch,s,function(err,searchrows){
+        if(err) console.error("err: "+err);
+        if(searchrows.length==0)
+        {
+          res.send("<script>alert('<강의 검색 불가> 없는 과목입니다.');window.history.back();</script>");
+        }
+        res.render('searchRes',{title:'강의 검색 결과',searchrows:searchrows});
+        console.log(req.body.s_course_name);
+        console.log("searchrows: "+JSON.stringify(searchrows));
+
+        connection.release();
+      });
+  });
+});
+
 
 module.exports=router;
