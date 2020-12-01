@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'utf-8'/>
+        <link rel ='stylesheet' href = '/stylesheets/style.css'/>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawVisualization);
+
+        var result
+
+        function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['수강시기', '전공', '교양', '평균'],
+            ['3학년-2학기', 2.5, 4.5, 3.5],
+            ['3학년-겨울', 0, 0.5, 0.5],
+            ['4학년-1학기', 1, 0, 1],
+            ['4학년-여름', 0, 4.5, 4.5],
+            [<?rows.수강시기?>, 'sqlJ.전공', 'sqlG.교양', 'sqlA.평균']
+        ]);
+
+        var options = {
+                title : '성적',
+          vAxis: {title: '평점'},
+          hAxis: {title: '수강시기'},
+          seriesType: 'bars',
+          series: {2: {type: 'line'}}
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+    </head>
+    <body>
+        <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    </body>
+</html>
